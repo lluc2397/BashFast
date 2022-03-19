@@ -1,0 +1,45 @@
+#main machine
+alias aldia='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo apt autoclean'
+alias home='cd ~/'
+alias docs='cd ~/Documents/'
+alias venv='py -m virtualenv'
+alias web='cd ~/Websites/'
+alias prog='cd ~/Programacion/'
+alias copyremote='rsync -chavzP --stats --progress'
+
+#docker
+alias docup='docker-compose -f local.yml up'
+
+#alembic commands
+alias alrev='alembic revision --autogenerate'
+alias almig='alembic upgrade head'
+alias almigrate='alrev && almig'
+
+#web test
+alias webv='source ~/Websites/invfin/developpement/inv/bin/activate'
+alias webtest='cd ~/Websites/invfin/developpement/InvFin && webv'
+alias runex='runserver --settings config.settings.local example.com:8000'
+
+#web
+alias webprod='cd ~/Websites/invfin/production/InvFin/'
+
+#python
+alias py='python3'
+
+#ngrok
+alias ngrok='cd ~/Programs && ./ngrok start local'
+
+#django
+alias manage='py manage.py'
+alias runserver='manage runserver'
+alias makemigrations='manage makemigrations'
+alias migrate='manage migrate'
+alias dmmr='makemigrations && migrate && runex'
+alias dt='manage test'
+
+#git
+alias gitall='git add . && git commit -m "." && git push'
+
+#web sucari
+alias lucasweb='web/virtualwebsite/websites && source ../bin/activate'
+alias runlocal='runserver --settings=websites.local'
