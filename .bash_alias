@@ -5,10 +5,13 @@ alias docs='cd ~/Documents/'
 alias venv='py -m virtualenv'
 alias web='cd ~/Websites/'
 alias prog='cd ~/Programacion/'
-alias copyremote='rsync -chavzP --stats --progress'
+alias copyfast='copy_with_rsync'
+alias mkedir='create_enter_dir'
+alias beexec='sudo chmod u+x'
 
 #docker
-alias docup='docker-compose -f local.yml up'
+alias docup='docker_compose_up'
+alias docclean='docker system prune -a --volumes --force'
 
 #alembic commands
 alias alrev='alembic revision --autogenerate'
@@ -38,7 +41,8 @@ alias dmmr='makemigrations && migrate && runex'
 alias dt='manage test'
 
 #git
-alias gitall='git add . && git commit -m "." && git push'
+alias gitall='git_send_all'
+alias gitweball='git_all_in_web'
 
 #web sucari
 alias lucasweb='web/virtualwebsite/websites && source ../bin/activate'
