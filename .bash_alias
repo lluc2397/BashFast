@@ -8,10 +8,12 @@ alias prog='cd ~/Programacion/'
 alias copyfast='copy_with_rsync'
 alias mkedir='create_enter_dir'
 alias beexec='sudo chmod u+x'
+alias open='xdg-open'
 
 #docker
 alias docup='docker_compose_up'
 alias docclean='docker system prune -a --volumes --force'
+alias docdjango='docker_compose_run_django'
 
 #alembic commands
 alias alrev='alembic revision --autogenerate'

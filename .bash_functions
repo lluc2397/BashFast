@@ -12,9 +12,16 @@ copy_with_rsync (){
 
 #Docker
 docker_compose_up (){
-	FROM_FILE="${1:-local.yml}"
-	docker-compose -f "$FROM_FILE" up
+        FROM_FILE="${1:-local.yml}"
+        docker-compose -f "$FROM_FILE" up
 }
+
+docker_compose_run_django (){
+	FROM_FILE="${1:-local.yml}"
+        COMMAND="$2"
+	docker-compose -f "$FROM_FILE" run --rm django python manage.py "$2"
+}
+
 
 #Git
 git_send_all (){
