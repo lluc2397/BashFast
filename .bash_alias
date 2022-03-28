@@ -9,6 +9,8 @@ alias copyfast='copy_with_rsync'
 alias mkedir='create_enter_dir'
 alias beexec='sudo chmod u+x'
 alias open='xdg-open'
+alias moveall='./*(D)'
+alias apipost='api_post_local_json'
 
 #docker
 alias docup='docker_compose_up'
@@ -41,6 +43,7 @@ alias makemigrations='manage makemigrations'
 alias migrate='manage migrate'
 alias dmmr='makemigrations && migrate && runex'
 alias dt='manage test'
+alias delete_mig='delete_all_migrations'
 
 #git
 alias gitall='git_send_all'

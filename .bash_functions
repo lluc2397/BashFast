@@ -6,8 +6,16 @@ create_enter_dir (){
 
 copy_with_rsync (){
 	FROM="$1"
-	TO="$2"
+	TO="${2:-.}"
 	rsync -chavzP --stats --progress "$FROM" "&TO"	
+}
+
+api_post_local_json (){
+	PATH="$1"
+	CONTENT="$2"	
+curl -X POST http://example.com:8000/"$PATH" \
+	-H 'Content-Type: application/json' \
+	-d "$CONTENT"
 }
 
 #Docker
@@ -41,4 +49,10 @@ git_all_in_web (){
 	git push origin "$BRANCH"
 	git push github "$BRANCH"
 	
+}
+
+#Django
+delete_all_migrations () {
+	find . -path "*/migrations/*.py"  -not -path "*/contrib/sites/migrations/*.py" -not -name "__init__.py" -delete
+	find . -path "*/migrations/*.pyc"  -delete
 }
