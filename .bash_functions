@@ -7,15 +7,26 @@ create_enter_dir (){
 copy_with_rsync (){
 	FROM="$1"
 	TO="${2:-.}"
-	rsync -chavzP --stats --progress "$FROM" "&TO"	
+	rsync -chavzP --stats --progress "$FROM" "$TO"	
 }
 
-api_post_local_json (){
-	PATH="$1"
-	CONTENT="$2"	
-curl -X POST http://example.com:8000/"$PATH" \
-	-H 'Content-Type: application/json' \
-	-d "$CONTENT"
+extract_tgz (){
+	FILE="$1"
+        TO="${2:-.}"
+	tar -xzvf "$FILE" -C "$TO"
+}
+
+count_files_inside (){
+	FOLDER="${1:-.}"
+	ls "$FOLDER" | wc -l
+}
+
+#Venv
+create_activate_enter_venv () {
+	VENV_NAME="${1:-venv}"
+	venv "$VENV_NAME"
+	source "$VENV_NAME"/bin/activate;
+	cd $PWD"/"$VENV_NAME
 }
 
 #Docker
@@ -43,16 +54,22 @@ git_send_all (){
 }
 
 git_all_in_web (){
+	CURRENT_PATH=$PWD
 	git_send_all;
 	webprod
 	git pull local "$BRANCH"
 	git push origin "$BRANCH"
 	git push github "$BRANCH"
-	
+	cd "$CURRENT_PATH"
 }
 
 #Django
 delete_all_migrations () {
 	find . -path "*/migrations/*.py"  -not -path "*/contrib/sites/migrations/*.py" -not -name "__init__.py" -delete
 	find . -path "*/migrations/*.pyc"  -delete
+}
+
+run_django_tests () {
+	TEST="$1"
+	dtest "$TEST" --settings config.settings.test --keepdb
 }

@@ -1,8 +1,6 @@
 #main machine
 alias aldia='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo apt autoclean'
-alias home='cd ~/'
 alias docs='cd ~/Documents/'
-alias venv='py -m virtualenv'
 alias web='cd ~/Websites/'
 alias prog='cd ~/Programacion/'
 alias copyfast='copy_with_rsync'
@@ -10,7 +8,13 @@ alias mkedir='create_enter_dir'
 alias beexec='sudo chmod u+x'
 alias open='xdg-open'
 alias moveall='./*(D)'
-alias apipost='api_post_local_json'
+alias extract='extract_tgz'
+alias count='count_files_inside'
+alias refalias='source ~/.zshrc'
+
+#Venv
+alias venv='py -m virtualenv'
+alias vae='create_activate_enter_venv'
 
 #docker
 alias docup='docker_compose_up'
@@ -34,7 +38,7 @@ alias webprod='cd ~/Websites/invfin/production/InvFin/'
 alias py='python3'
 
 #ngrok
-alias ngrok='cd ~/Programs && ./ngrok start local'
+alias ngrok='~/Installed-Programs/ngrok'
 
 #django
 alias manage='py manage.py'
@@ -42,8 +46,10 @@ alias runserver='manage runserver'
 alias makemigrations='manage makemigrations'
 alias migrate='manage migrate'
 alias dmmr='makemigrations && migrate && runex'
-alias dt='manage test'
+alias dtest='manage test'
 alias delete_mig='delete_all_migrations'
+alias local_settings='--settings=config.settings.local'
+alias dt='run_django_tests'
 
 #git
 alias gitall='git_send_all'
