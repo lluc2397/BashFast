@@ -73,3 +73,8 @@ run_django_tests () {
 	TEST="$1"
 	dtest "$TEST" --settings config.settings.test --keepdb
 }
+
+create_new_django_app () {
+	APP_NAME="$1"
+	manage startapp "$APP_NAME"
+}

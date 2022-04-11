@@ -10,7 +10,7 @@ alias open='xdg-open'
 alias moveall='./*(D)'
 alias extract='extract_tgz'
 alias count='count_files_inside'
-alias refalias='source ~/.zshrc'
+alias ra='source ~/.zshrc'
 
 #Venv
 alias venv='py -m virtualenv'
@@ -50,6 +50,7 @@ alias dtest='manage test'
 alias delete_mig='delete_all_migrations'
 alias local_settings='--settings=config.settings.local'
 alias dt='run_django_tests'
+alias startapp='create_new_django_app'
 
 #git
 alias gitall='git_send_all'
