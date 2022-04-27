@@ -1,4 +1,22 @@
 #Local machine
+
+create_new_alias (){
+	NAME="$1"
+	DO="$2"
+	echo "alias $NAME='$DO'" >> $PWD/".bash_alias"
+	echo "Alias $1 created, refreshing alias"
+	ra
+	echo "New alias ready"
+}
+
+delete_alias (){
+	ALIAS="$1"
+	sed -i "/\b\($ALIAS\)\b/d" $PWD/".bash_alias"
+	echo "Alias $NAME deleted, refreshing alias"
+	ra
+	echo "Alias ready"
+}
+
 create_enter_dir (){
 	mkdir -p $1
 	cd $1

@@ -1,17 +1,3 @@
-#main machine
-alias aldia='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo apt autoclean'
-alias docs='cd ~/Documents/'
-alias web='cd ~/Websites/'
-alias prog='cd ~/Programacion/'
-alias copyfast='copy_with_rsync'
-alias mkedir='create_enter_dir'
-alias beexec='sudo chmod u+x'
-alias open='xdg-open'
-alias moveall='./*(D)'
-alias extract='extract_tgz'
-alias count='count_files_inside'
-alias ra='source ~/.zshrc'
-
 #Venv
 alias venv='py -m virtualenv'
 alias vae='create_activate_enter_venv'
@@ -20,25 +6,17 @@ alias vae='create_activate_enter_venv'
 alias docup='docker_compose_up'
 alias docclean='docker system prune -a --volumes --force'
 alias docdjango='docker_compose_run_django'
+alias docdanim='docker rmi $(docker images -f “dangling=true” -q)'
 
 #alembic commands
 alias alrev='alembic revision --autogenerate'
 alias almig='alembic upgrade head'
 alias almigrate='alrev && almig'
 
-#web test
-alias webv='source ~/Websites/invfin/developpement/inv/bin/activate'
-alias webtest='cd ~/Websites/invfin/developpement/InvFin && webv'
 alias runex='runserver --settings config.settings.local example.com:8000'
-
-#web
-alias webprod='cd ~/Websites/invfin/production/InvFin/'
 
 #python
 alias py='python3'
-
-#ngrok
-alias ngrok='~/Installed-Programs/ngrok'
 
 #django
 alias manage='py manage.py'
@@ -46,7 +24,6 @@ alias runserver='manage runserver'
 alias makemigrations='manage makemigrations'
 alias migrate='manage migrate'
 alias dmmr='makemigrations && migrate && runex'
-alias dtest='manage test'
 alias delete_mig='delete_all_migrations'
 alias local_settings='--settings=config.settings.local'
 alias dt='run_django_tests'
@@ -57,5 +34,20 @@ alias gitall='git_send_all'
 alias gitweball='git_all_in_web'
 
 #web sucari
-alias lucasweb='web/virtualwebsite/websites && source ../bin/activate'
 alias runlocal='runserver --settings=websites.local'
+
+#main machine
+alias aldia='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo apt autoclean && sudo apt autopurge'
+alias copyfast='copy_with_rsync'
+alias mkedir='create_enter_dir'
+alias beexec='sudo chmod u+x'
+alias open='xdg-open'
+alias moveall='mv ./*(D)'
+alias extract='extract_tgz'
+alias count='count_files_inside'
+alias ra='source ~/.zshrc'
+alias nvme='/mnt/74089228-1bc4-44ce-ad9b-82150245119f'
+alias ea='nano $PWD/.bash_alias'
+alias ef='nano $PWD/.bash_functions'
+alias na='create_new_alias'
+alias rma='delete_alias'
