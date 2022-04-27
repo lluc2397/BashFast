@@ -62,7 +62,7 @@ docker_compose_run_django (){
 #Git
 current_git_branch() {
  ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
- return $ref
+ echo $ref
 }
 
 git_send_all (){
