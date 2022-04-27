@@ -68,10 +68,8 @@ current_git_branch() {
 git_send_all (){
 	COMMIT_MESSAGE="${1:-.}"
 	REPO="${2:-origin}"
-	BRANCH="${3:-None}"
-	if ($BRANCH == 'None'){
-		BRANCH = current_git_branch;
-	}
+	CURRENT_BRANCH=$(current_git_branch)
+	BRANCH="${3:-$CURRENT_BRANCH}"
 	git add .
 	git commit -m "$COMMIT_MESSAGE"
 	git push "$REPO" "$BRANCH"
