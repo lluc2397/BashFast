@@ -1,5 +1,4 @@
 #Local machine
-
 create_new_alias (){
 	NAME="$1"
 	DO="$2"
@@ -61,11 +60,18 @@ docker_compose_run_django (){
 
 
 #Git
+current_git_branch() {
+ ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
+ return $ref
+}
+
 git_send_all (){
 	COMMIT_MESSAGE="${1:-.}"
 	REPO="${2:-origin}"
-	BRANCH="${3:-master}"
-
+	BRANCH="${3:-None}"
+	if ($BRANCH == 'None'){
+		BRANCH = current_git_branch;
+	}
 	git add .
 	git commit -m "$COMMIT_MESSAGE"
 	git push "$REPO" "$BRANCH"

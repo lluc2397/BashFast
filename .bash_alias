@@ -30,8 +30,8 @@ alias dt='run_django_tests'
 alias startapp='create_new_django_app'
 
 #git
-alias gitall='git_send_all'
-alias gitweball='git_all_in_web'
+alias gall='git_send_all'
+alias gallweb='git_all_in_web'
 
 #web sucari
 alias runlocal='runserver --settings=websites.local'
