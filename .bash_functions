@@ -8,6 +8,22 @@ create_new_alias (){
 	echo "New alias ready"
 }
 
+list_process (){
+	NAME="$1"
+	ps -C "$NAME" -f
+}
+
+_create_ssh_key (){
+	NAME="$1"
+	ssh-keygen -f ~/.ssh/"$NAME" -t ecdsa -b 521
+}
+
+_send_ssh_key (){
+	NAME="$1"
+	USER="$2"
+	ssh-copy-id -i ~/.ssh/"$NAME" "$USER"
+}
+
 delete_alias (){
 	ALIAS="$1"
 	sed -i "/\b\($ALIAS\)\b/d" $PWD/".bash_alias"
@@ -24,7 +40,13 @@ create_enter_dir (){
 copy_with_rsync (){
 	FROM="$1"
 	TO="${2:-.}"
-	rsync -chavzP --stats --progress "$FROM" "$TO"	
+	rsync -chavzP --stats --progress "$FROM" "$TO"
+}
+
+copy_with_tar (){
+	FROM="$1"
+	TO="${2:-.}"
+	tar cf - "$FROM" | tar xvf - -C "$TO"
 }
 
 extract_tgz (){
@@ -44,6 +66,13 @@ create_activate_enter_venv () {
 	venv "$VENV_NAME"
 	source "$VENV_NAME"/bin/activate;
 	cd $PWD"/"$VENV_NAME
+}
+
+# Jupyter
+venv_jupyter () {
+	create_activate_enter_venv;
+	pip install ipykernel
+	ipython kernel install --user --name="$VENV_NAME"
 }
 
 #Docker
