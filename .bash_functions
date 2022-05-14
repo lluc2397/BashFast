@@ -70,9 +70,33 @@ create_activate_enter_venv () {
 
 # Jupyter
 venv_jupyter () {
-	create_activate_enter_venv;
+	VENV_NAME="${1:-venv}"
+	venv "$VENV_NAME"
+	source "$VENV_NAME"/bin/activate;
 	pip install ipykernel
 	ipython kernel install --user --name="$VENV_NAME"
+	pip install pandas numpy seaborn matplotlib plotly openpyxl
+}
+
+new_jupyter_file () {
+	FILE_NAME="${1:-brain}"
+	touch "$FILE_NAME".ipynb
+}
+
+new_jupyter_project () {
+	FOLDER_NAME="${2}"
+	FILE_NAME="${3:-brain}"
+	FULL_PATH="/mnt/74089228-1bc4-44ce-ad9b-82150245119f/AI/$FOLDER_NAME"
+	cd $FULL_PATH
+	venv_jupyter;
+	NEW_FILE="$FILE_NAME".ipynb
+	touch "$NEW_FILE"  
+	echo "import matplotlib.pyplot as plt">> "$FULL_PATH/$NEW_FILE"
+	echo "import seaborn as sns">> "$FULL_PATH/$NEW_FILE"
+	echo "import pandas as pd">> "$FULL_PATH/$NEW_FILE"
+	echo "import numpy as np">> "$FULL_PATH/$NEW_FILE"
+	echo "import matplotlib">> "$FULL_PATH/$NEW_FILE"
+	echo "import plotly.express as px">> "$FULL_PATH/$NEW_FILE"
 }
 
 #Docker

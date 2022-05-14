@@ -2,6 +2,11 @@
 alias venv='py -m virtualenv'
 alias vae='create_activate_enter_venv'
 
+# Jupyter
+alias vj='venv_jupyter'
+alias njp='new_jupyter_project'
+alias njf='new_jupyter_file'
+
 #docker
 alias docup='docker_compose_up'
 alias docclean='docker system prune -a --volumes --force'
