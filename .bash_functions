@@ -13,17 +13,6 @@ list_process (){
 	ps -C "$NAME" -f
 }
 
-_create_ssh_key (){
-	NAME="$1"
-	ssh-keygen -f ~/.ssh/"$NAME" -t ecdsa -b 521
-}
-
-_send_ssh_key (){
-	NAME="$1"
-	USER="$2"
-	ssh-copy-id -i ~/.ssh/"$NAME" "$USER"
-}
-
 delete_alias (){
 	ALIAS="$1"
 	sed -i "/\b\($ALIAS\)\b/d" $PWD/".bash_alias"
@@ -59,6 +48,25 @@ count_files_inside (){
 	FOLDER="${1:-.}"
 	ls "$FOLDER" | wc -l
 }
+
+#SSH
+_create_ssh_key (){
+	NAME="$1"
+	ssh-keygen -f ~/.ssh/"$NAME" -t ecdsa -b 521
+}
+
+_send_ssh_key (){
+	NAME="$1"
+	USER="$2"
+	ssh-copy-id -i ~/.ssh/"$NAME".pub "$USER"
+}
+
+_show_ssh_key (){
+	NAME="$1"
+	cat ~/.ssh/"$NAME"
+}
+
+
 
 #Venv
 create_activate_enter_venv () {
@@ -118,7 +126,7 @@ current_git_branch() {
  echo $ref
 }
 
-git_send_all (){
+git_save_all (){
 	COMMIT_MESSAGE="${1:-.}"
 	REPO="${2:-origin}"
 	CURRENT_BRANCH=$(current_git_branch)
@@ -128,14 +136,27 @@ git_send_all (){
 	git push "$REPO" "$BRANCH"
 }
 
-git_all_in_web (){
-	CURRENT_PATH=$PWD
-	git_send_all;
-	webprod
-	git pull local "$BRANCH"
-	git push origin "$BRANCH"
-	git push github "$BRANCH"
-	cd "$CURRENT_PATH"
+git_save_dev (){
+	COMMIT_MESSAGE="${1:-.}"
+	CURRENT_BRANCH=$(current_git_branch)
+	BRANCH="${2:-$CURRENT_BRANCH}"
+	git add .
+	git commit -m "$COMMIT_MESSAGE"
+	git push "origin" "$BRANCH"
+	git push "gitlab" "$BRANCH"
+	git push "bitbucket" "$BRANCH"
+}
+
+git_send_web (){
+	COMMIT_MESSAGE="${1:-.}"
+	CURRENT_BRANCH=$(current_git_branch)
+	BRANCH="${2:-$CURRENT_BRANCH}"
+	git add .
+	git commit -m "$COMMIT_MESSAGE"
+	git push "origin" "$BRANCH"
+	git push "gitlab" "$BRANCH"
+	git push "bitbucket" "$BRANCH"
+	git push "prod" "$BRANCH"
 }
 
 #Django

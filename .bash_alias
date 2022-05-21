@@ -35,16 +35,17 @@ alias dt='run_django_tests'
 alias startapp='create_new_django_app'
 
 #git
-alias gall='git_send_all'
-alias gallweb='git_all_in_web'
+alias gsa='git_save_all'
+alias gsdv='git_save_dev'
+alias gsw='git_send_web'
 
 #web sucari
 alias runlocal='runserver --settings=websites.local'
 
 #main machine
 alias aldia='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo apt autoclean && sudo apt autopurge'
-alias crsync='copy_with_rsync'
-alias ctar='copy_with_tar'
+alias cprsync='copy_with_rsync'
+alias cptar='copy_with_tar'
 alias med='create_enter_dir'
 alias beexec='sudo chmod u+x'
 alias open='xdg-open'
@@ -60,9 +61,13 @@ alias ef='edit_functions'
 alias new_alias='create_new_alias'
 alias na='new_alias'
 alias rma='delete_alias'
-alias new_ssh_key='_create_ssh_key'
-alias send_ssh_key='_send_ssh_key'
-alias nsk='new_ssh_key'
-alias ssk='send_ssh_key'
 alias lsp='list_process'
 alias inv='cd /mnt/74089228-1bc4-44ce-ad9b-82150245119f/InvFin'
+
+#SSH
+alias new_ssh_key='_create_ssh_key'
+alias send_ssh_key='_send_ssh_key'
+alias show_ssh_key='_show_ssh_key'
+alias nsk='new_ssh_key'
+alias ssk='send_ssh_key'
+alias showkey='show_ssh_key'
