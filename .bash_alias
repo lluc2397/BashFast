@@ -12,6 +12,7 @@ alias docup='docker_compose_up'
 alias docclean='docker system prune -a --volumes --force'
 alias docdjango='docker_compose_run_django'
 alias docdanim='docker rmi $(docker images -f “dangling=true” -q)'
+alias dcp='docker_copy'
 
 #alembic commands
 alias alrev='alembic revision --autogenerate'
@@ -37,7 +38,9 @@ alias startapp='create_new_django_app'
 #git
 alias gsa='git_save_all'
 alias gsdv='git_save_dev'
+alias gsndv='git_save_dev_new_branch'
 alias gsw='git_send_web'
+alias cgb='current_git_branch'
 
 #web sucari
 alias runlocal='runserver --settings=websites.local'
@@ -71,3 +74,6 @@ alias show_ssh_key='_show_ssh_key'
 alias nsk='new_ssh_key'
 alias ssk='send_ssh_key'
 alias showkey='show_ssh_key'
+
+#Server
+alias backup_remote='do_backup'

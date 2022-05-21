@@ -119,11 +119,20 @@ docker_compose_run_django (){
 	docker-compose -f "$FROM_FILE" run --rm django python manage.py "$2"
 }
 
+docker_copy () {
+	FROM_FILE="${1:-local.yml}"
+	CONTAINER_NAME="${2:-postgres}"
+	FOLDER_NAME="${3:-backups}"
+	CONTAINER_ID=$(docker-compose -f "$FROM_FILE" ps -q "$CONTAINER_NAME")
+	docker cp ./"$FOLDER_NAME"/*.sql.gz "$CONTAINER_ID":/backups
+}
 
 #Git
 current_git_branch() {
- ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
- echo $ref
+#  ref=$(git symbolic-ref HEAD | cut -d'/' -f3)
+#  echo $ref
+ ref=$(git symbolic-ref HEAD)
+ echo ${ref:11}
 }
 
 git_save_all (){
@@ -134,6 +143,17 @@ git_save_all (){
 	git add .
 	git commit -m "$COMMIT_MESSAGE"
 	git push "$REPO" "$BRANCH"
+}
+
+git_save_dev_new_branch (){
+	COMMIT_MESSAGE="${1:-.}"
+	CURRENT_BRANCH=$(current_git_branch)
+	BRANCH="${2:-$CURRENT_BRANCH}"
+	git add .
+	git commit -m "$COMMIT_MESSAGE"
+	git push --set-upstream "origin" "$BRANCH"
+	git push --set-upstream "gitlab" "$BRANCH"
+	git push --set-upstream "bitbucket" "$BRANCH"
 }
 
 git_save_dev (){
@@ -173,4 +193,23 @@ run_django_tests () {
 create_new_django_app () {
 	APP_NAME="$1"
 	manage startapp "$APP_NAME"
+}
+
+# Postgres
+copy_db () {
+	DB_NAME="${1:-prod}"
+	BACKUP_DIR_PATH="${2}"
+	backup_filename="backup_$(date +'%Y_%m_%dT%H_%M_%S').sql.gz"
+	pg_dump -d "${DB_NAME}" | gzip > "${BACKUP_DIR_PATH}${backup_filename}"
+}
+
+#Server backup
+do_backup (){
+	DB_NAME="${1:-prod}"
+	BACKUP_DIR_PATH="${2}"
+	backup_filename="backup_$(date +'%Y_%m_%dT%H_%M_%S').sql.gz"
+	ssh webserver "pg_dump "${DB_NAME}" | gzip > "${BACKUP_DIR_PATH}${backup_filename}""
+	FROM=webserver:"${BACKUP_DIR_PATH}${backup_filename}"
+	TO="${3:-.}"
+	rsync -chavzP --stats --progress "$FROM" "$TO"
 }
