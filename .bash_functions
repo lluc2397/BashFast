@@ -135,16 +135,6 @@ current_git_branch() {
  echo ${ref:11}
 }
 
-git_save_all (){
-	COMMIT_MESSAGE="${1:-.}"
-	REPO="${2:-origin}"
-	CURRENT_BRANCH=$(current_git_branch)
-	BRANCH="${3:-$CURRENT_BRANCH}"
-	git add .
-	git commit -m "$COMMIT_MESSAGE"
-	git push "$REPO" "$BRANCH"
-}
-
 git_save_dev_new_branch (){
 	COMMIT_MESSAGE="${1:-.}"
 	CURRENT_BRANCH=$(current_git_branch)
@@ -179,6 +169,16 @@ git_send_web (){
 	git push "prod" "$BRANCH"
 }
 
+git_regular_save (){
+	COMMIT_MESSAGE="${1:-.}"
+	CURRENT_BRANCH=$(current_git_branch)
+	REPO="${2:-origin}"
+	BRANCH="${3:-$CURRENT_BRANCH}"
+	git add .
+	git commit -m "$COMMIT_MESSAGE"
+	git push "$REPO" "$BRANCH"
+}
+
 #Django
 delete_all_migrations () {
 	find . -path "*/migrations/*.py"  -not -path "*/contrib/sites/migrations/*.py" -not -name "__init__.py" -delete
@@ -206,10 +206,10 @@ copy_db () {
 #Server backup
 do_backup (){
 	DB_NAME="${1:-prod}"
-	BACKUP_DIR_PATH="${2}"
+	TO="${2:-/mnt/74089228-1bc4-44ce-ad9b-82150245119f/Server/invfin}"
 	backup_filename="backup_$(date +'%Y_%m_%dT%H_%M_%S').sql.gz"
-	ssh webserver "pg_dump "${DB_NAME}" | gzip > "${BACKUP_DIR_PATH}${backup_filename}""
-	FROM=webserver:"${BACKUP_DIR_PATH}${backup_filename}"
-	TO="${3:-.}"
+	ssh webserver "pg_dump "${DB_NAME}" | gzip > "${backup_filename}""
+	FROM=webserver:"${backup_filename}"
+	
 	rsync -chavzP --stats --progress "$FROM" "$TO"
 }
